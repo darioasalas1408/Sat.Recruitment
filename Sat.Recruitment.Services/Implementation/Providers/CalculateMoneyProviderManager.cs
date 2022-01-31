@@ -9,7 +9,7 @@ namespace Sat.Recruitment.Services.Implementation.Providers
 {
     public class CalculateMoneyProviderManager : ICalculateMoneyProviderManager
     {
-        private readonly IReadOnlyDictionary<UserType, ICalculateMoneyProvider> _calculateMoneyProviders;
+        private readonly IReadOnlyDictionary<UserType, ICalculateMoneyProvider> calculateMoneyProviders;
 
         public CalculateMoneyProviderManager()
         {
@@ -17,7 +17,7 @@ namespace Sat.Recruitment.Services.Implementation.Providers
 
             Type calculateMoneyProviderType = typeof(ICalculateMoneyProvider);
 
-            _calculateMoneyProviders = calculateMoneyProviderType.Assembly.ExportedTypes
+            calculateMoneyProviders = calculateMoneyProviderType.Assembly.ExportedTypes
                 .Where(x => calculateMoneyProviderType.IsAssignableFrom(x) && !x.IsInterface)
                 .Select(x =>
                  {
@@ -32,8 +32,8 @@ namespace Sat.Recruitment.Services.Implementation.Providers
 
         public ICalculateMoneyProvider GetICalculateMoneyProvider(UserType userType)
         {
-            ICalculateMoneyProvider provider = _calculateMoneyProviders.GetValueOrDefault(userType);
-            return provider ?? _calculateMoneyProviders[UserType.Normal];
+            ICalculateMoneyProvider provider = calculateMoneyProviders.GetValueOrDefault(userType);
+            return provider ?? calculateMoneyProviders[UserType.Normal];
         }
     }
 }

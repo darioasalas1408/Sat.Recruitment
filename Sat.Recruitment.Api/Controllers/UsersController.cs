@@ -31,7 +31,6 @@ namespace Sat.Recruitment.Api.Controllers
                 ValidationResult validationResult = userValidator.Validate(userInput);
                 if (!validationResult.IsValid)
                 {
-                    //return new ResultApi(false, validationResult.Errors.First().ErrorMessage);
                     return BadRequest(validationResult.Errors.First().ErrorMessage);
                 }
 
@@ -41,16 +40,13 @@ namespace Sat.Recruitment.Api.Controllers
                 {
                     return Ok("User Created");
                 }
-                else
-                {
-                    return BadRequest("The user is duplicated");
-                }
+
+                return BadRequest("The user is duplicated");
             }
             catch (System.Exception ex)
             {
                 return StatusCode(500, ex.Message);
             }
         }
-
     }
 }
